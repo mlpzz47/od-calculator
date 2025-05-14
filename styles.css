@@ -54,6 +54,12 @@ body {
     color: var(--op-color);
 }
 
+/* .operation-container::after {
+    content: "";
+    width: 2px;
+    height: 3px;
+} */
+
 .result-container {
     padding: 0 30px;
     align-self: end;
