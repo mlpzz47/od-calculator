@@ -106,7 +106,7 @@ body {
 
 #multiply{grid-column: 4; grid-row: 2} #divide{grid-column: 5; grid-row: 2} #add{grid-column: 4; grid-row: 3} #substract{grid-column: 5; grid-row: 3} #equals{grid-column: 5; grid-row: 4} #ans{grid-column: 4; grid-row: 4}
 
-@keyframes typesomething {
+@keyframes type-something {
     from {
         opacity: 0;
     }
