@@ -25,43 +25,33 @@ const equalsBtn = document.getElementById("equals");
 
 const operatorBtn = document.querySelectorAll(".btn--operator")
 
+const numBtn = document.querySelectorAll(".btn--number");
+
+const btn = document.querySelectorAll(".btn--towrite");
 
 // GETTING THE NUMBER
 
-const numBtn = document.querySelectorAll(".btn--number");
-let numString = "";
-let numPressed = false;
+let operation = []
 
-const getDigit = (e)=>{
-    return new Promise((resolve) => {
-        const digit = e.target.value;
-        resolve(digit);
+const getOperation = (e)=>{
+    let num;
+    btn.forEach((btn)=>{
+        if (btn == numBtn) {
+            btn.addEventListener("click",()=>{
+                let digit = e.target.value;
+                num += digit;
+                operationContainer.textContent += num;
+            })
+        } else if (btn == operatorBtn) {
+            btn.addEventListener("click",()=>{
+                operation.push(num);
+                num = '';
+                let operator = e.target.textContent;
+                operation.push(operator);
+                operationContainer.textContent += operator;
+            })
+        }
     })
-}
-
-numBtn.forEach(btn =>{
-    btn.addEventListener("click", (e)=>{
-        getDigit(e).then((digit) => {
-            if (digit) {
-                numString += digit;
-                numPressed = true;
-                if (digit === "." && numString.includes(".")) {
-                    decimalBtn.setAttribute("disabled", "true")
-                }
-                operationContainer.textContent = numString;
-            }
-        })
-    })
-})
-
-const getNum = async ()=> {
-    while(numPressed){
-        await getDigit();
-        
-    }
-    let finalNum = parseInt(numString);
-    numString = "";
-    return finalNum;
 }
 
 //  DELETE AND CLEAR
@@ -75,11 +65,27 @@ deleteBtn.addEventListener("click", ()=>{
     numString = numArray.join('');
     operationContainer.textContent = numString;
 })
-// clearBtn.addEventListener("click", ()=>{
 
-// })
+clearBtn.addEventListener("click", ()=>{
+    operation = [];
+})
 
 
-const operate = (num1,num2)=>{
-    
-}
+
+
+equalsBtn.addEventListener("click",()=>{
+    const operate = (num1,num2)=>{
+        let num1 = operation[0];
+        let num2 = operation[2];
+        if (operation[1] === "+") {
+            return num1 + num2;
+        } else if (operation[1] === "-") {
+            return num1 + num2;
+        } else if (operation[1] === "×") {
+            return num1 * num2;
+        } else if (operation[1] === "÷") {
+            return num1 / num2;
+        }
+    }
+    resultContainer.textContent = operate();
+})
