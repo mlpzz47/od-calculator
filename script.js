@@ -32,25 +32,27 @@ const btn = document.querySelectorAll(".btn--towrite");
 // GETTING THE NUMBER
 
 let operation = []
+let num = '';
 
-const getOperation = (e)=>{
-    let num;
-    btn.forEach((btn)=>{
-        if (btn == numBtn) {
-            btn.addEventListener("click",()=>{
-                let digit = e.target.value;
-                num += digit;
-                operationContainer.textContent += num;
-            })
-        } else if (btn == operatorBtn) {
-            btn.addEventListener("click",()=>{
+const getOperation = ()=>{
+    numBtn.forEach((btn)=>{
+        btn.addEventListener("click",(e)=>{
+            let digit = e.target.value;
+            num += digit;
+            operationContainer.textContent += digit;
+        })
+    })
+    
+    operatorBtn.forEach((btn)=>{
+        btn.addEventListener('click',(e)=>{
+            if (num !== '') {
                 operation.push(num);
                 num = '';
-                let operator = e.target.textContent;
-                operation.push(operator);
-                operationContainer.textContent += operator;
-            })
-        }
+            }
+            let operator = e.target.textContent;
+            operation.push(operator);
+            operationContainer.textContent += operator;
+        })
     })
 }
 
@@ -59,33 +61,46 @@ const getOperation = (e)=>{
 const clearBtn = document.getElementById("clear");
 const deleteBtn = document.getElementById("delete");
 
-deleteBtn.addEventListener("click", ()=>{
-    let numArray = numString.split('');
-    numArray.splice(-1,1);
-    numString = numArray.join('');
-    operationContainer.textContent = numString;
-})
+// deleteBtn.addEventListener("click", ()=>{
+//     let numArray = numString.split('');
+//     numArray.splice(-1,1);
+//     numString = numArray.join('');
+//     operationContainer.textContent = numString;
+// })
 
 clearBtn.addEventListener("click", ()=>{
     operation = [];
+    num = '';
+    operationContainer.textContent = '';
+    resultContainer.textContent = '';
 })
 
 
-
+const operate = ()=>{
+    let num1 = parseFloat(operation[0]);
+    let num2 = parseFloat(operation[2]);
+    let operator = operation[1];
+    if (operator === "+") {
+        return num1 + num2;
+    } else if (operator === "-") {
+        return num1 - num2;
+    } else if (operator === "×") {
+        return num1 * num2;
+    } else if (operator === "÷") {
+        if (num2 !== 0) {
+            return num1 / num2;
+        } else {
+            return "MATH ERROR";
+        }
+    } else {
+        return 0;
+    }
+}
 
 equalsBtn.addEventListener("click",()=>{
-    const operate = (num1,num2)=>{
-        let num1 = operation[0];
-        let num2 = operation[2];
-        if (operation[1] === "+") {
-            return num1 + num2;
-        } else if (operation[1] === "-") {
-            return num1 + num2;
-        } else if (operation[1] === "×") {
-            return num1 * num2;
-        } else if (operation[1] === "÷") {
-            return num1 / num2;
-        }
-    }
-    resultContainer.textContent = operate();
+    operation.push(num);
+    const result = operate();
+    resultContainer.textContent = result;
 })
+
+getOperation();
