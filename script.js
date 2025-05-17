@@ -12,9 +12,6 @@ const decimalBtn = document.getElementById("decimal");
 // const piBtn = document.getElementById("pi");
 
 const operationContainer = document.querySelector(".operation-container");
-// const num1Container = document.querySelector(".num1");
-// const operatorContainer = document.querySelector(".num1");
-// const num2Container = document.querySelector(".num2");
 const resultContainer = document.querySelector(".result-container");
 
 const addBtn = document.getElementById("add");
