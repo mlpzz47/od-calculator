@@ -61,12 +61,19 @@ const getOperation = ()=>{
 const clearBtn = document.getElementById("clear");
 const deleteBtn = document.getElementById("delete");
 
-// deleteBtn.addEventListener("click", ()=>{
-//     let numArray = numString.split('');
-//     numArray.splice(-1,1);
-//     numString = numArray.join('');
-//     operationContainer.textContent = numString;
-// })
+deleteBtn.addEventListener("click", ()=>{
+    let lastElement = operation[operation.length - 1]
+    if (lastElement.length === 1) {
+        operation.pop();
+        operationContainer.textContent = operationContainer.textContent.slice(0,-1);
+    } else {
+        let lastElementArr = lastElement.split('');
+        lastElementArr.pop();
+        lastElement = lastElementArr.join('');
+        operation[operation.length - 1] = lastElement;
+        operationContainer.textContent = operationContainer.textContent.slice(0,-1);
+    }
+})
 
 clearBtn.addEventListener("click", ()=>{
     operation = [];
